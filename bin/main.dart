@@ -71,7 +71,7 @@ void main() async {
     if (choice == '1') {
       await inputTugas(tasks);
     } else if (choice == '2') {
-      await lihatTugas(tasks);
+      lihatTugas(tasks);
     } else if (choice == '3') {
       await hapusTugas(tasks);
     } else if (choice == '4') {
@@ -107,7 +107,7 @@ Future<void> inputTugas(List<Task> tasks) async {
 }
 
 // Fungsi view tugas
-Future<void> lihatTugas(List<Task> tasks) async {
+void lihatTugas(List<Task> tasks) {
   tasks.sort((a, b) {
     final priorityCompare = a.priority.compareTo(b.priority);
     if (priorityCompare != 0) return priorityCompare;
