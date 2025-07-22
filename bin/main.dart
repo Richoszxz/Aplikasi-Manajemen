@@ -66,41 +66,10 @@ void main() async {
 
     if (choice == '1') {
       await inputTugas(tasks);
-
     } else if (choice == '2') {
-      tasks.sort((a, b) {
-        final priorityCompare = a.priority.compareTo(b.priority);
-        if (priorityCompare != 0) return priorityCompare;
-        return b.priority.compareTo(a.priority);
-      });
-
-      print('\n📋 Daftar Tugas:');
-      for (var task in tasks) {
-        final color = getColorForPriority(task.priority);
-        print('$color- ${task.title} | Deadline: ${task.deadline} | Prioritas: ${task.priority}\x1B[0m');
-      }
+      await lihatTugas(tasks);
     } else if (choice == '3') {
-      if (tasks.isEmpty) {
-        print('📭 Tidak ada tugas untuk dihapus.');
-      } else {
-        print('\n🗑️ Daftar Tugas:');
-        for (int i = 0; i < tasks.length; i++) {
-          final t = tasks[i];
-          final color = getColorForPriority(t.priority);
-          print('$color${i + 1}. ${t.title} | Deadline: ${t.deadline} | Prioritas: ${t.priority}\x1B[0m');
-        }
-
-        stdout.write('\nMasukkan nomor tugas yang ingin dihapus: ');
-        final index = int.tryParse(stdin.readLineSync() ?? '') ?? -1;
-
-        if (index < 1 || index > tasks.length) {
-          print('❌ Nomor tidak valid.');
-        } else {
-          final removed = tasks.removeAt(index - 1);
-          await saveTasks(tasks);
-          print('🗑️ Tugas "${removed.title}" berhasil dihapus.');
-        }
-      }
+      await hapusTugas(tasks);
     } else if (choice == '4') {
       print('\n👋 Terima kasih telah menggunakan aplikasi!');
       break;
@@ -131,4 +100,42 @@ Future<void> inputTugas(List<Task> tasks) async {
   await saveTasks(tasks);
 
   print('\n Tugas berhasil disimpan!\n');
+}
+
+Future<void> lihatTugas(List<Task> tasks) async {
+  tasks.sort((a, b) {
+        final priorityCompare = a.priority.compareTo(b.priority);
+        if (priorityCompare != 0) return priorityCompare;
+        return b.priority.compareTo(a.priority);
+      });
+
+      print('\n📋 Daftar Tugas:');
+      for (var task in tasks) {
+        final color = getColorForPriority(task.priority);
+        print('$color- ${task.title} | Deadline: ${task.deadline} | Prioritas: ${task.priority}\x1B[0m');
+  }
+}
+
+Future<void> hapusTugas(List<Task> tasks) async {
+  if (tasks.isEmpty) {
+        print('📭 Tidak ada tugas untuk dihapus.');
+      } else {
+        print('\n🗑️ Daftar Tugas:');
+        for (int i = 0; i < tasks.length; i++) {
+          final t = tasks[i];
+          final color = getColorForPriority(t.priority);
+          print('$color${i + 1}. ${t.title} | Deadline: ${t.deadline} | Prioritas: ${t.priority}\x1B[0m');
+        }
+
+        stdout.write('\nMasukkan nomor tugas yang ingin dihapus: ');
+        final index = int.tryParse(stdin.readLineSync() ?? '') ?? -1;
+
+        if (index < 1 || index > tasks.length) {
+          print('❌ Nomor tidak valid.');
+        } else {
+          final removed = tasks.removeAt(index - 1);
+          await saveTasks(tasks);
+          print('🗑️ Tugas "${removed.title}" berhasil dihapus.');
+        }
+      }
 }
