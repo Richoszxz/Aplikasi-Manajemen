@@ -12,7 +12,7 @@ String getColorForPriority(int priority) {
     case 3:
       return '\x1B[32m'; // Hijau
     default:
-      return '\x1B[0m';  // Default
+      return '\x1B[0m'; // Default
   }
 }
 
@@ -25,32 +25,35 @@ void main() async {
 
     // Fitur 1: Reminder tugas hari ini
     final now = DateTime.now();
-    final todayTasks = tasks.where((t) =>
-        t.deadline.year == now.year &&
-        t.deadline.month == now.month &&
-        t.deadline.day == now.day &&
-        t.deadline.isAfter(now)).toList()
+    final todayTasks = tasks
+        .where((t) =>
+            t.deadline.year == now.year &&
+            t.deadline.month == now.month &&
+            t.deadline.day == now.day &&
+            t.deadline.isAfter(now))
+        .toList()
       ..sort((a, b) => a.deadline.compareTo(b.deadline));
 
     if (todayTasks.isNotEmpty) {
       print('\n📌 Reminder Tugas Hari Ini 📌');
       for (var t in todayTasks) {
         final color = getColorForPriority(t.priority);
-        final time = '${t.deadline.hour.toString().padLeft(2, '0')}:${t.deadline.minute.toString().padLeft(2, '0')}';
-        print('$color- ${t.title} | Jam: $time | Prioritas: ${t.priority}\x1B[0m');
+        final time =
+            '${t.deadline.hour.toString().padLeft(2, '0')}:${t.deadline.minute.toString().padLeft(2, '0')}';
+        print(
+            '$color- ${t.title} | Jam: $time | Prioritas: ${t.priority}\x1B[0m');
       }
     }
 
     // Fitur 2: Tampilkan tugas yang sudah lewat deadline
-    final expiredTasks = tasks
-        .where((t) => t.deadline.isBefore(now))
-        .toList()
+    final expiredTasks = tasks.where((t) => t.deadline.isBefore(now)).toList()
       ..sort((a, b) => a.deadline.compareTo(b.deadline));
     if (expiredTasks.isNotEmpty) {
       print('\n⏰ Tugas yang sudah melewati deadline ⏰');
       for (var t in expiredTasks) {
         final color = getColorForPriority(t.priority);
-        print('$color- ${t.title} | Deadline: ${t.deadline} | Prioritas: ${t.priority}\x1B[0m');
+        print(
+            '$color- ${t.title} | Deadline: ${t.deadline} | Prioritas: ${t.priority}\x1B[0m');
       }
     }
 
@@ -92,7 +95,7 @@ Future<void> inputTugas(List<Task> tasks) async {
   stdout.write(' Deadline (yyyy-mm-dd HH:mm) : ');
   final deadlineInput = stdin.readLineSync();
   final deadline = DateTime.tryParse(deadlineInput ?? '') ??
-      DateTime.now().add(Duration(days: 1)); 
+      DateTime.now().add(Duration(days: 1));
 
   stdout.write(' Prioritas (1. Tinggi, 2. Sedang, 3. Rendah) : ');
   final priority = int.tryParse(stdin.readLineSync() ?? '3') ?? 3;
@@ -106,39 +109,41 @@ Future<void> inputTugas(List<Task> tasks) async {
 // Fungsi view tugas
 Future<void> lihatTugas(List<Task> tasks) async {
   tasks.sort((a, b) {
-        final priorityCompare = a.priority.compareTo(b.priority);
-        if (priorityCompare != 0) return priorityCompare;
-        return b.priority.compareTo(a.priority);
-      });
+    final priorityCompare = a.priority.compareTo(b.priority);
+    if (priorityCompare != 0) return priorityCompare;
+    return b.priority.compareTo(a.priority);
+  });
 
-      print('\n📋 Daftar Tugas:');
-      for (var task in tasks) {
-        final color = getColorForPriority(task.priority);
-        print('$color- ${task.title} | Deadline: ${task.deadline} | Prioritas: ${task.priority}\x1B[0m');
+  print('\n📋 Daftar Tugas:');
+  for (var task in tasks) {
+    final color = getColorForPriority(task.priority);
+    print(
+        '$color- ${task.title} | Deadline: ${task.deadline} | Prioritas: ${task.priority}\x1B[0m');
   }
 }
 
 // Fungsi hapus tugas
 Future<void> hapusTugas(List<Task> tasks) async {
   if (tasks.isEmpty) {
-        print('📭 Tidak ada tugas untuk dihapus.');
-      } else {
-        print('\n🗑️ Daftar Tugas:');
-        for (int i = 0; i < tasks.length; i++) {
-          final t = tasks[i];
-          final color = getColorForPriority(t.priority);
-          print('$color${i + 1}. ${t.title} | Deadline: ${t.deadline} | Prioritas: ${t.priority}\x1B[0m');
-        }
+    print('📭 Tidak ada tugas untuk dihapus.');
+  } else {
+    print('\n🗑️ Daftar Tugas:');
+    for (int i = 0; i < tasks.length; i++) {
+      final t = tasks[i];
+      final color = getColorForPriority(t.priority);
+      print(
+          '$color${i + 1}. ${t.title} | Deadline: ${t.deadline} | Prioritas: ${t.priority}\x1B[0m');
+    }
 
-        stdout.write('\nMasukkan nomor tugas yang ingin dihapus: ');
-        final index = int.tryParse(stdin.readLineSync() ?? '') ?? -1;
+    stdout.write('\nMasukkan nomor tugas yang ingin dihapus: ');
+    final index = int.tryParse(stdin.readLineSync() ?? '') ?? -1;
 
-        if (index < 1 || index > tasks.length) {
-          print('❌ Nomor tidak valid.');
-        } else {
-          final removed = tasks.removeAt(index - 1);
-          await saveTasks(tasks);
-          print('🗑️ Tugas "${removed.title}" berhasil dihapus.');
-        }
-      }
+    if (index < 1 || index > tasks.length) {
+      print('❌ Nomor tidak valid.');
+    } else {
+      final removed = tasks.removeAt(index - 1);
+      await saveTasks(tasks);
+      print('🗑️ Tugas "${removed.title}" berhasil dihapus.');
+    }
+  }
 }
