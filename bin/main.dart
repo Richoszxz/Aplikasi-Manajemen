@@ -65,20 +65,8 @@ void main() async {
     final choice = stdin.readLineSync();
 
     if (choice == '1') {
-      stdout.write('\nJudul Tugas     : ');
-      final title = stdin.readLineSync() ?? '';
+      await inputTugas(tasks);
 
-      stdout.write('Deadline (yyyy-mm-dd HH:mm): ');
-      final deadlineInput = stdin.readLineSync();
-      final deadline = DateTime.tryParse(deadlineInput ?? '') ??
-          DateTime.now().add(Duration(days: 1));
-
-      stdout.write('Prioritas (1. Tinggi, 2. Sedang, 3. Rendah) : ');
-      final priority = int.tryParse(stdin.readLineSync() ?? '3') ?? 3;
-
-      tasks.add(Task(title: title, deadline: deadline, priority: priority));
-      await saveTasks(tasks);
-      print('✅ Tugas berhasil disimpan!');
     } else if (choice == '2') {
       tasks.sort((a, b) {
         final priorityCompare = a.priority.compareTo(b.priority);
@@ -124,4 +112,23 @@ void main() async {
     stdout.write('\nTekan ENTER untuk kembali ke menu...');
     stdin.readLineSync();
   }
+}
+
+
+Future<void> inputTugas(List<Task> tasks) async {
+  stdout.write('\n Judul Tugas     : ');
+  final title = stdin.readLineSync() ?? '';
+
+  stdout.write(' Deadline (yyyy-mm-dd HH:mm) : ');
+  final deadlineInput = stdin.readLineSync();
+  final deadline = DateTime.tryParse(deadlineInput ?? '') ??
+      DateTime.now().add(Duration(days: 1)); 
+
+  stdout.write(' Prioritas (1. Tinggi, 2. Sedang, 3. Rendah) : ');
+  final priority = int.tryParse(stdin.readLineSync() ?? '3') ?? 3;
+
+  tasks.add(Task(title: title, deadline: deadline, priority: priority));
+  await saveTasks(tasks);
+
+  print('\n Tugas berhasil disimpan!\n');
 }
