@@ -64,6 +64,7 @@ void main() async {
     print("\n=================================================");
     final choice = stdin.readLineSync();
 
+    // Branching pilihan menu utama
     if (choice == '1') {
       await inputTugas(tasks);
     } else if (choice == '2') {
@@ -83,7 +84,7 @@ void main() async {
   }
 }
 
-
+// Fungsi input tugas
 Future<void> inputTugas(List<Task> tasks) async {
   stdout.write('\n Judul Tugas     : ');
   final title = stdin.readLineSync() ?? '';
@@ -102,6 +103,7 @@ Future<void> inputTugas(List<Task> tasks) async {
   print('\n Tugas berhasil disimpan!\n');
 }
 
+// Fungsi view tugas
 Future<void> lihatTugas(List<Task> tasks) async {
   tasks.sort((a, b) {
         final priorityCompare = a.priority.compareTo(b.priority);
@@ -116,6 +118,7 @@ Future<void> lihatTugas(List<Task> tasks) async {
   }
 }
 
+// Fungsi hapus tugas
 Future<void> hapusTugas(List<Task> tasks) async {
   if (tasks.isEmpty) {
         print('📭 Tidak ada tugas untuk dihapus.');
