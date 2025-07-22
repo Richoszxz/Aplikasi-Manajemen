@@ -15,5 +15,9 @@ membangun aplikasi terminal berbasis dart untuk mencatat daftar tugas harian den
 2. Melihat daftar tugas
 3. Menghapus tugas
 4. Melihat pemberitahuan jika ada tugas yang sudah deadline
+5. Reminder tugas untuk dikerjakan hari ini
 
 # Cara menjalankan aplikasi
+1. Buka Terminal Panel
+2. `dart run 'letak file main'`
+3. Lalu enter, dan silahkan menjalankan program
