@@ -60,7 +60,7 @@ void main() async {
     // Menu utama
     print('\nMenu Utama:');
     print('1. Tambah Tugas');
-    print('2. Lihat Semua Tugas');
+    print('2. Lihat Tugas');
     print('3. Hapus Tugas');
     print('4. Keluar');
     stdout.write('Pilih menu (1/2/3/4): ');
