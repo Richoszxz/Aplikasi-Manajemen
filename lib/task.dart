@@ -18,4 +18,4 @@ class Task { // deklarasi kelas
   );
 }
 // kita menggunakan data enkapsulation untuk menyimpan dta tugas dlm objek task 
-// paradikma pbo dan memakai konsep enkapsulation
+// menggunakan paradikma pbo dan memakai konsep enkapsulation

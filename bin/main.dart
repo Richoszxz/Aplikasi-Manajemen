@@ -16,7 +16,7 @@ String getColorForPriority(int priority) {
   }
 }
 
-void main() async {
+void main() async { //  ftr menangani async tanpa menghentikan eksekusi kode (berhubungan dengan waktu)
   List<Task> tasks = await loadTasks();
 
   while (true) {
@@ -39,7 +39,7 @@ void main() async {
       for (var t in todayTasks) {
         final color = getColorForPriority(t.priority);
         final time =
-            '${t.deadline.hour.toString().padLeft(2, '0')}:${t.deadline.minute.toString().padLeft(2, '0')}';
+            '${t.deadline.hour.toString().padLeft(2, '0')}:${t.deadline.minute.toString().padLeft(2, '0')}'; // mengubah objek menjadi string
         print(
             '$color- ${t.title} | Jam: $time | Prioritas: ${t.priority}\x1B[0m');
       }
