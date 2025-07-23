@@ -24,13 +24,13 @@ void main() async {
     print('=== APLIKASI MANAJEMEN TUGAS DENGAN REMINDER ===');
 
     // Fitur 1: Reminder tugas hari ini
-    final now = DateTime.now();
+    final now = DateTime.now(); // tipe data tgl waktu
     final todayTasks = tasks
         .where((t) =>
             t.deadline.year == now.year &&
             t.deadline.month == now.month &&
             t.deadline.day == now.day &&
-            t.deadline.isAfter(now))
+            t.deadline.isAfter(now)) // tugas yang belum lewat deadline
         .toList()
       ..sort((a, b) => a.deadline.compareTo(b.deadline));
 
@@ -109,7 +109,7 @@ Future<void> inputTugas(List<Task> tasks) async {
 // Fungsi view tugas
 void lihatTugas(List<Task> tasks) {
   tasks.sort((a, b) {
-    final priorityCompare = a.priority.compareTo(b.priority);
+    final priorityCompare = a.priority.compareTo(b.priority); 
     if (priorityCompare != 0) return priorityCompare;
     return b.priority.compareTo(a.priority);
   });

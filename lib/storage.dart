@@ -9,15 +9,15 @@ String getFilePath() {
   return path;
 }
 
-Future<void> saveTasks(List<Task> tasks) async {
+Future<void> saveTasks(List<Task> tasks) async { //fungsi untuk mengarahkan hasil input ke file json
   final path = getFilePath();
   final file = File(path);
   final jsonList = tasks.map((task) => task.toJson()).toList();
-  await file.writeAsString(jsonEncode(jsonList));
+  await file.writeAsString(jsonEncode(jsonList)); // digunakan untuk menyimpan dta dlm file json
   // print('✅ Data disimpan di: $path');
 }
 
-Future<List<Task>> loadTasks() async {
+Future<List<Task>> loadTasks() async { // memuat data tugas 
   final path = await getFilePath();
   final file = File(path);
 
@@ -26,7 +26,7 @@ Future<List<Task>> loadTasks() async {
     return [];
   }
 
-  final contents = file.readAsStringSync();
+  final contents = file.readAsStringSync(); // untuk membaca isi file json
 
   if (contents.trim().isEmpty) {
     print('⚠️ File kosong, mengembalikan list kosong.');
@@ -34,7 +34,7 @@ Future<List<Task>> loadTasks() async {
   }
 
   try {
-    final List<dynamic> jsonList = jsonDecode(contents);
+    final List<dynamic> jsonList = jsonDecode(contents); // eror jika file kosong dnmc tipe data berubah ubah 
     return jsonList.map((json) => Task.fromJson(json)).toList();
   } catch (e) {
     print('❌ Gagal membaca file JSON: $e');
@@ -42,7 +42,7 @@ Future<List<Task>> loadTasks() async {
   }
 }
 
-
+// KODE COBA COBA
 
 // import 'dart:io';
 // import 'dart:convert';
