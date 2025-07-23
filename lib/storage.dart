@@ -9,10 +9,10 @@ String getFilePath() {
   return path;
 }
 
-Future<void> saveTasks(List<Task> tasks) async { //fungsi untuk mengarahkan hasil input ke file json
+Future<void> saveTasks(List<Task> tasks) async { //untuk mengarahkan hasil input ke file json
   final path = getFilePath();
   final file = File(path);
-  final jsonList = tasks.map((task) => task.toJson()).toList(); // menggubah objek
+  final jsonList = tasks.map((task) => task.toJson()).toList(); 
   await file.writeAsString(jsonEncode(jsonList)); // digunakan untuk menyimpan dta dlm json
   // print('✅ Data disimpan di: $path');
 }

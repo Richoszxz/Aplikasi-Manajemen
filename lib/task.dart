@@ -17,5 +17,4 @@ class Task { // deklarasi kelas
     priority: json['priority'],
   );
 }
-// kita menggunakan data enkapsulation untuk menyimpan dta tugas dlm objek task 
-// menggunakan paradikma pbo dan memakai konsep enkapsulation
+// tidak ada enkapulasi namun ada konsep pbonya yaitu kelas dan objek 
