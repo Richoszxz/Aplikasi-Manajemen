@@ -2,7 +2,7 @@ import 'dart:io';
 import '../lib/task.dart';
 import '../lib/storage.dart';
 
-// Fungsi untuk memberi warna pada teks berdasarkan prioritas
+// memberi warna pada teks berdasarkan prioritas
 String getColorForPriority(int priority) {
   switch (priority) {
     case 1:
