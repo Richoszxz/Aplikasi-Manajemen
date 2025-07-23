@@ -106,7 +106,7 @@ Future<void> inputTugas(List<Task> tasks) async {
   print('\n Tugas berhasil disimpan!\n');
 }
 
-// Fungsi view tugas
+// Fungsi daftar tugas diurutkan berdasarkan prioritas
 void lihatTugas(List<Task> tasks) {
   tasks.sort((a, b) {
     final priorityCompare = a.priority.compareTo(b.priority); 
