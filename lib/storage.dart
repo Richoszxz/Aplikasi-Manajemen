@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'task.dart';
 
 String getFilePath() {
-  // Ambil path folder tempat aplikasi dijalankan (biasanya root project)
+  // Ambil path folder tempat aplikasi dijalankan dari terminal 
   final directory = Directory.current;
   final path = '${directory.path}/tasks.json';
   return path;
