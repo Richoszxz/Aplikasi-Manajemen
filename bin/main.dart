@@ -97,7 +97,7 @@ Future<void> inputTugas(List<Task> tasks) async {
     stdout.write(' Deadline (yyyy-mm-dd HH:mm) : ');
     final input = stdin.readLineSync()?.trim() ?? '';
 
-    final regex = RegExp(r'^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$');
+    final regex = RegExp(r'^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$'); // Cek input sesuai atau tidak
     final match = regex.firstMatch(input);
 
     if (match == null) {
