@@ -92,13 +92,58 @@ Future<void> inputTugas(List<Task> tasks) async {
   stdout.write('\n Judul Tugas     : ');
   final title = stdin.readLineSync() ?? '';
 
-  stdout.write(' Deadline (yyyy-mm-dd HH:mm) : ');
-  final deadlineInput = stdin.readLineSync();
-  final deadline = DateTime.tryParse(deadlineInput ?? '') ??
-      DateTime.now().add(Duration(days: 1));
+  DateTime? deadline;
+  while (deadline == null) {
+    stdout.write(' Deadline (yyyy-mm-dd HH:mm) : ');
+    final input = stdin.readLineSync()?.trim() ?? '';
 
-  stdout.write(' Prioritas (1. Tinggi, 2. Sedang, 3. Rendah) : ');
-  final priority = int.tryParse(stdin.readLineSync() ?? '3') ?? 3;
+    final regex = RegExp(r'^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$');
+    final match = regex.firstMatch(input);
+
+    if (match == null) {
+      print(' Format salah. Gunakan format yyyy-mm-dd HH:mm');
+      continue;
+    }
+
+    final year = int.parse(match.group(1)!);
+    final month = int.parse(match.group(2)!);
+    final day = int.parse(match.group(3)!);
+    final hour = int.parse(match.group(4)!);
+    final minute = int.parse(match.group(5)!);
+
+    // Cek validitas komponen
+    if (month < 1 || month > 12 ||
+        day < 1 || day > 31 ||
+        hour < 0 || hour > 23 ||
+        minute < 0 || minute > 59) {
+      print(' Nilai tanggal atau waktu tidak valid.');
+      continue;
+    }
+
+    try {
+      deadline = DateTime(year, month, day, hour, minute);
+
+      // Cek jika nilai berubah karena auto-correction
+      if (deadline.year != year || deadline.month != month || deadline.day != day) {
+        print(' Tanggal tidak valid (contoh: 30 Februari).');
+        deadline = null;
+      }
+    } catch (_) {
+      print(' Gagal membuat tanggal, input tidak valid.');
+    }
+  }
+
+  int? priority;
+  while (priority  == null || priority < 1 || priority > 3) {
+      stdout.write(' Prioritas (1. Tinggi, 2. Sedang, 3. Rendah) : ');
+      final input = stdin.readLineSync();
+      final parsed = int.tryParse(input ?? '');
+      if (parsed != null && parsed >= 1 && parsed <= 3) {
+        priority = parsed;
+      } else {
+        print("Pilihan tidak valid");
+      }
+  }
 
   tasks.add(Task(title: title, deadline: deadline, priority: priority));
   await saveTasks(tasks);
